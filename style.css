@@ -101,3 +101,22 @@ body{
     border-radius: 0.3em;
     cursor: pointer;
 }
+
+.list{
+    background-color: #fff;
+    padding: 1.8em 1.2em;
+    box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
+    border-radius: 0.6em;
+}
+
+
+@media screen and (max-width: 600px) {
+    .wrapper{
+        font-size: 14px;
+    }
+
+    .sub-container{
+        grid-template-columns: 1fr;
+        gap: 1em;
+    }
+}
