@@ -16,7 +16,11 @@ let tempAmount = 0;
 
 // set budget function
 totalAmountButton.addEventListener("click", ()=>{
+
+    // console.log(typeof(tempAmount)) -> number
     tempAmount = totalAmount.value;
+    // console.log(typeof(totalAmount.value)) -> string
+    // console.log(typeof(tempAmount)) -> string
     // bad input
     if ( tempAmount === "" || tempAmount < 0){
         errorMessage.classList.remove("hide");
@@ -31,3 +35,30 @@ totalAmountButton.addEventListener("click", ()=>{
 });
 
 
+// Add expense function
+
+checkAmountButton.addEventListener("click", ()=> {
+    // check empty
+    if (!userAmount.value || !productTitle.value){
+        productTitleError.classList.remove("hide");
+        return false;
+    }
+    // Enable buttons
+
+    // Expense
+    // type="number" is a hint to implement client-side validation and appropriate GUI controls but the underlying element will still store strings.
+    // "10" + "20" = "1020"
+    // "5" -3 = 2
+    // 5 - "3" = 2
+    let expenditure = parseInt(userAmount.value);
+    let sum = parseInt(expenditureValue.innerText) + expenditure;
+    expenditureValue.innerText = sum;
+    const totalBalance = tempAmount - sum;
+    balanceValue.innerText = totalBalance;
+
+    // Create list
+
+    productTitle.value = "";
+    userAmount.value = "";
+
+})
