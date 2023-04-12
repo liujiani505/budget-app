@@ -35,6 +35,49 @@ totalAmountButton.addEventListener("click", ()=>{
 });
 
 
+// Modify list elements function
+
+// Default function parameters allow named parameters to be initialized with default values if no value or undefined is passed.
+const modifyElement = (element, edit = false) => {
+    let parentDiv = element.parentElement;
+    let currentBalance = balanceValue.innerText;
+    let currentExpense = expenditureValue.innerText;
+    let parentAmount = parentDiv.querySelector(".amount").innerText;
+    if (edit) {
+        let parentText = parentDiv.querySelector(".product").innerText;
+        productTitle.value = parentText;
+        userAmount.value = parentAmount;
+    }
+    balanceValue.innerText = parseInt(currentBalance) + parseInt(parentAmount);
+    expenditureValue.innerText = parseInt(currentExpense) - parseInt(parentAmount);
+    parentDiv.remove();
+}
+
+
+// Create list function 
+
+const listCreator = (expenseName, expenseValue) => {
+    let subListContent = document.createElement("div");
+    subListContent.classList.add("sublist-content", "flex-space");
+    subListContent.innerHTML = `<p class="product">${expenseName}</p><P class="amount">${expenseValue}</p>`;
+    list.appendChild(subListContent);
+    let editButton = document.createElement("button");
+    editButton.classList.add("fa-solid", "fa-pen-to-square", "edit");
+    editButton.style.fontSize = "1.2em";
+    editButton.addEventListener("click", () => {
+        modifyElement(editButton, true);
+    });
+    let deleteButton = document.createElement("button");
+    deleteButton.classList.add("fa-solid", "fa-trash-can", "delete");
+    deleteButton.style.fontSize = "1.2em";
+    deleteButton.addEventListener("click", () => {
+        modifyElement(deleteButton);
+    });
+    subListContent.appendChild(editButton);
+    subListContent.appendChild(deleteButton);
+}
+
+
 // Add expense function
 
 checkAmountButton.addEventListener("click", ()=> {
@@ -51,14 +94,15 @@ checkAmountButton.addEventListener("click", ()=> {
     // "5" -3 = 2
     // 5 - "3" = 2
     let expenditure = parseInt(userAmount.value);
+    // Total expense (existing + new)
     let sum = parseInt(expenditureValue.innerText) + expenditure;
     expenditureValue.innerText = sum;
+    // Total balance = budget - total expense
     const totalBalance = tempAmount - sum;
     balanceValue.innerText = totalBalance;
-
     // Create list
-
+    listCreator(productTitle.value, userAmount.value)
+    // Clear inputs
     productTitle.value = "";
     userAmount.value = "";
-
 })
